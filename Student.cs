@@ -21,7 +21,7 @@ namespace StudentGradeAnalys
 
         public void StudentInformation()
         {
-            Console.WriteLine($"Student name: { Name }.\nStudent grade: {Grade }.\nStudent passed: {Passed}");
+            Console.WriteLine($"Student { Name } Grade: {Grade } Passes: {Passed}");
         }
     }
 
