@@ -1,4 +1,6 @@
-﻿namespace StudentGradeAnalys
+﻿using System.Transactions;
+
+namespace StudentGradeAnalys
 
 //    🎓 1. Studentbetyg-Analys Skapa en klass Student med egenskaperna Name, Grade och Passed(bool).
 //✅ Gör en lista av studenter och använd: .FindAll() för att hitta de som klarade kursen.Average() 
@@ -8,6 +10,8 @@
     {
         static void Main(string[] args)
         {
+            // My list of students:
+
             var students = new List<Student>
             {
                 new Student("Emma", "B", false),
@@ -21,18 +25,40 @@
                 new Student("Mitch", "C", false),
             };
 
+            // Present all students whit personal information:
+
             Console.WriteLine("All students:");
             students.ForEach(s => s.StudentInformation());
             Console.WriteLine();
+
+            // Show all students that passed this "course":
 
             var studentsThatPassed = students.FindAll(s => s.Passed == true);
             Console.WriteLine("Students that passed this class: ");
             studentsThatPassed.ForEach(s => {
             Console.WriteLine($"{s.Name} passed whit the grade {s.Grade}." );
+            Console.WriteLine();
             });
-            
 
-            
+            // Show the average grade in this class:
+
+            var gradeMap = new Dictionary<string, int> // Dictionaru är inte en metod utan mer som ex list eller så. Vi ersätter inte värdet i våra obejekt, vi säger bara att ex A är detsamma som 5
+            {
+                ["A"] = 1,
+                ["B"] = 2,
+                ["C"] = 3,
+                ["D"] = 4,
+                ["E"] = 5,
+                ["F"] = 0,
+
+            };
+
+            double averageNumeric = students.Average(s => gradeMap[s.Grade]);
+
+            Console.WriteLine($"The average grade of this class is: {averageNumeric}");
+            Console.WriteLine("A = 5, B = 4, C = 3, D = 2, E = 1, F = 0");
+            Console.WriteLine();
+
         }
 
     }
