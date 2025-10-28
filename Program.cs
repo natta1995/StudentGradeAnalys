@@ -44,12 +44,14 @@ namespace StudentGradeAnalys
 
             var gradeMap = new Dictionary<string, int> // Dictionaru är inte en metod utan mer som ex list eller så. Vi ersätter inte värdet i våra obejekt, vi säger bara att ex A är detsamma som 5
             {
-                ["A"] = 1,
-                ["B"] = 2,
+                
+                ["A"] = 5,
+                ["B"] = 4,
                 ["C"] = 3,
-                ["D"] = 4,
-                ["E"] = 5,
+                ["D"] = 2,
+                ["E"] = 1,
                 ["F"] = 0,
+
 
             };
 
@@ -58,6 +60,29 @@ namespace StudentGradeAnalys
             Console.WriteLine($"The average grade of this class is: {averageNumeric}");
             Console.WriteLine("A = 5, B = 4, C = 3, D = 2, E = 1, F = 0");
             Console.WriteLine();
+
+            // Sort students by Grade
+
+           students.Sort((studentA, studentB) => gradeMap[studentB.Grade].CompareTo(gradeMap[studentA.Grade]));
+
+            Console.WriteLine("\nStudents sorted by grade (highest first):");
+
+            foreach (var student in students)
+            {
+                Console.WriteLine($"{student.Name} - {student.Grade}");
+            }
+
+            // Show the top 3 students
+
+            Console.WriteLine("\nTop 3 students:");
+
+            var topThree = students.Take(3).ToList();  
+
+            foreach (var student in topThree)
+            {
+                Console.WriteLine($"{student.Name} - {student.Grade}");
+            }
+
 
         }
 
