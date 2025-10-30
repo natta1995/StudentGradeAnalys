@@ -1,4 +1,7 @@
-﻿using System.Transactions;
+﻿
+using System.IO;
+using System.Text.Json;
+using System.Linq;
 
 namespace StudentGradeAnalys
 
@@ -7,8 +10,14 @@ namespace StudentGradeAnalys
     {
         static void Main(string[] args)
         {
-            
-            var students = new List<Student>
+            string path = "students.json";
+
+            Console.WriteLine($"Saving file to: {Path.GetFullPath(path)}");
+
+
+            if (!File.Exists(path))
+            {
+                var students = new List<Student> // Sead - data
             {
                 new Student("Emma", "B", false),
                 new Student("Jonas", "A", true),
@@ -21,7 +30,15 @@ namespace StudentGradeAnalys
                 new Student("Mitch", "C", false),
             };
 
-            var handler = new StudentManager(students);
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                File.WriteAllText(path, JsonSerializer.Serialize(students, options));
+                Console.WriteLine(" Seed data created at students.json");
+            }
+
+            var readJson = File.ReadAllText(path);
+            var loadedStudents = JsonSerializer.Deserialize<List<Student>>(readJson) ?? new();
+
+            var handler = new StudentManager(loadedStudents);
 
             handler.ShowAllStudents();
             handler.ShowAllPassedStudents();
