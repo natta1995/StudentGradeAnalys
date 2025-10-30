@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using System.Text.Json;
 
 namespace StudentGradeAnalys
 
@@ -74,9 +75,9 @@ namespace StudentGradeAnalys
 
             // Show the top 3 students
 
-            Console.WriteLine("\nTop 3 students:");
+            Console.WriteLine("\nTop 3 students:"); // obs. använder listan i övningen innan där jag redan organiserat dem enligt betyg
 
-            var topThree = students.Take(3).ToList();  
+            var topThree = students.Take(3).ToList();  // Take(3) är att ta de 3 första. vi kan organisera listan först och sedan ta ut det första, finns andra som ex Skip. Så man kan hoppa de första osv. 
 
             foreach (var student in topThree)
             {
