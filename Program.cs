@@ -12,12 +12,14 @@ namespace StudentGradeAnalys
         {
             string path = "students.json";
 
-            Console.WriteLine($"Saving file to: {Path.GetFullPath(path)}");
+         //   Console.WriteLine($"Saving file to: {Path.GetFullPath(path)}"); - Använde till att se om filen hittades - felsökning. 
 
-
-            if (!File.Exists(path))
+            try
             {
-                var students = new List<Student> // Sead - data
+
+                if (!File.Exists(path))
+                {
+                    var students = new List<Student> // Sead - data
             {
                 new Student("Emma", "B", false),
                 new Student("Jonas", "A", true),
@@ -30,23 +32,27 @@ namespace StudentGradeAnalys
                 new Student("Mitch", "C", false),
             };
 
-                var options = new JsonSerializerOptions { WriteIndented = true };
-                File.WriteAllText(path, JsonSerializer.Serialize(students, options));
-                Console.WriteLine(" Seed data created at students.json");
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    File.WriteAllText(path, JsonSerializer.Serialize(students, options));
+                    Console.WriteLine(" Seed data created at students.json");
+                }
+
+                var readJson = File.ReadAllText(path);
+                var loadedStudents = JsonSerializer.Deserialize<List<Student>>(readJson) ?? new();
+
+                var handler = new StudentManager(loadedStudents);
+
+                handler.ShowAllStudents();
+                handler.ShowAllPassedStudents();
+                handler.ShowThisClassAverageGrade();
+                handler.SortStudentByGrade();
+                handler.ShowTopThreeStudents();
+
             }
-
-            var readJson = File.ReadAllText(path);
-            var loadedStudents = JsonSerializer.Deserialize<List<Student>>(readJson) ?? new();
-
-            var handler = new StudentManager(loadedStudents);
-
-            handler.ShowAllStudents();
-            handler.ShowAllPassedStudents();
-            handler.ShowThisClassAverageGrade();
-            handler.SortStudentByGrade();
-            handler.ShowTopThreeStudents();
-
-
+            catch
+            {
+                Console.WriteLine("Something went wrong");
+            }
         }
 
     }
