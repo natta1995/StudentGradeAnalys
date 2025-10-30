@@ -10,10 +10,11 @@ namespace StudentGradeAnalys
 {
     public class Student
     {
-        public string Name;
-        public string Grade;
-        public bool Passed; 
+        public string Name { get; set; }
+        public string Grade { get; set; }
+        public bool Passed { get; set; }
 
+        public Student() { }
         public Student(string name, string grade, bool passed)
         {
             Name = name;
